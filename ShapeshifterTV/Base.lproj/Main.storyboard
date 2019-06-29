@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="9038" systemVersion="15A226f" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" initialViewController="499-42-d0g">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" initialViewController="499-42-d0g">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9026"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <scenes>
         <!--Game View Controller-->
         <scene sceneID="dEh-eV-dlg">
             <objects>
-                <viewController id="499-42-d0g" customClass="GameViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="499-42-d0g" customClass="GameViewController" customModule="ShapeshifterTV" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TiC-Vw-u93"/>
                         <viewControllerLayoutGuide type="bottom" id="3TX-uQ-fmp"/>
@@ -17,10 +17,207 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                     </view>
+                    <connections>
+                        <segue destination="taF-UY-2xp" kind="show" identifier="menuSegue" id="tS4-jX-rWS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dFW-Nd-Df7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="651" y="554"/>
+            <point key="canvasLocation" x="-635" y="-159"/>
+        </scene>
+        <!--Menu View Controller-->
+        <scene sceneID="ilK-Al-hTr">
+            <objects>
+                <viewController id="taF-UY-2xp" customClass="MenuViewController" customModule="ShapeshifterTV" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fPm-99-0QE"/>
+                        <viewControllerLayoutGuide type="bottom" id="Njq-cb-NHm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zBn-0F-dDN">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Difficulty: Easy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6BZ-kc-878">
+                                <rect key="frame" x="169" y="104" width="373" height="56"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="45"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Music: On" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mKS-qC-blG">
+                                <rect key="frame" x="222" y="312" width="247" height="56"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="45"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Rest Time:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y3P-hj-zX0">
+                                <rect key="frame" x="158" y="508" width="395" height="56"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="45"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Heart Rate Monitor" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kwx-oY-Nzh">
+                                <rect key="frame" x="89" y="704" width="533" height="56"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="45"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eau-74-m0p">
+                                <rect key="frame" x="774" y="87" width="226" height="86"/>
+                                <animations/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Easy"/>
+                                <connections>
+                                    <action selector="easyButton:" destination="taF-UY-2xp" eventType="primaryActionTriggered" id="stQ-y4-Ro7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tWx-Pw-9Mv">
+                                <rect key="frame" x="1031" y="87" width="226" height="86"/>
+                                <animations/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Medium"/>
+                                <connections>
+                                    <action selector="mediumButton:" destination="taF-UY-2xp" eventType="primaryActionTriggered" id="xWr-bq-9wV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IQ4-ac-s1g">
+                                <rect key="frame" x="1289" y="87" width="226" height="86"/>
+                                <animations/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Hard"/>
+                                <connections>
+                                    <action selector="hardButton:" destination="taF-UY-2xp" eventType="primaryActionTriggered" id="8kE-1M-Bbj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aoA-5f-07W">
+                                <rect key="frame" x="774" y="491" width="226" height="86"/>
+                                <animations/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="+"/>
+                                <connections>
+                                    <action selector="addRestTime:" destination="taF-UY-2xp" eventType="primaryActionTriggered" id="Vlu-Ge-Sbu"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KZr-EM-vkN">
+                                <rect key="frame" x="774" y="280" width="226" height="86"/>
+                                <animations/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="On"/>
+                                <connections>
+                                    <action selector="musicButton:" destination="taF-UY-2xp" eventType="primaryActionTriggered" id="Zox-1x-SOH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Asf-sS-SY1">
+                                <rect key="frame" x="774" y="687" width="226" height="86"/>
+                                <animations/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Connect"/>
+                                <connections>
+                                    <action selector="connectMonitor:" destination="taF-UY-2xp" eventType="primaryActionTriggered" id="Dg4-is-rqa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bl2-b4-fCU">
+                                <rect key="frame" x="1031" y="491" width="226" height="86"/>
+                                <animations/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="-"/>
+                                <connections>
+                                    <action selector="decreaseRestTime:" destination="taF-UY-2xp" eventType="primaryActionTriggered" id="uWV-2P-kMb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTy-b7-oUO">
+                                <rect key="frame" x="1031" y="878" width="226" height="86"/>
+                                <animations/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Credits"/>
+                                <connections>
+                                    <action selector="credits:" destination="taF-UY-2xp" eventType="primaryActionTriggered" id="Shw-uI-580"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7e1-IN-iP7">
+                                <rect key="frame" x="790" y="878" width="195" height="86"/>
+                                <animations/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Play"/>
+                                <connections>
+                                    <action selector="playButton:" destination="taF-UY-2xp" eventType="primaryActionTriggered" id="IGb-ty-KqE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                    </view>
+                    <connections>
+                        <outlet property="addRestTimeButton" destination="aoA-5f-07W" id="UD5-Cl-Y7M"/>
+                        <outlet property="connectButton" destination="Asf-sS-SY1" id="UCy-Gm-cgd"/>
+                        <outlet property="decreaseRestTimeButton" destination="Bl2-b4-fCU" id="RoX-gP-w0z"/>
+                        <outlet property="diffLabel" destination="6BZ-kc-878" id="xqf-A6-QdO"/>
+                        <outlet property="easyButton" destination="eau-74-m0p" id="aof-fk-abS"/>
+                        <outlet property="hardButton" destination="IQ4-ac-s1g" id="cmT-Tz-5aC"/>
+                        <outlet property="hrcLabel" destination="kwx-oY-Nzh" id="mT6-tz-iBl"/>
+                        <outlet property="mediumButton" destination="tWx-Pw-9Mv" id="6Yk-Ai-gFR"/>
+                        <outlet property="musicButton" destination="KZr-EM-vkN" id="aaB-5P-ocP"/>
+                        <outlet property="musicLabel" destination="mKS-qC-blG" id="coL-Yo-npp"/>
+                        <outlet property="restTimeLabel" destination="Y3P-hj-zX0" id="vya-qe-9OX"/>
+                        <segue destination="499-42-d0g" kind="show" identifier="gameSegue" id="xaP-I2-ghI"/>
+                        <segue destination="NOW-lc-fMf" kind="show" identifier="toCreditsSegue" id="r7i-8c-AzI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zp6-7V-2wm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1633" y="-199"/>
+        </scene>
+        <!--Credits View Controller-->
+        <scene sceneID="WQR-gh-JRm">
+            <objects>
+                <viewController id="NOW-lc-fMf" customClass="CreditsViewController" customModule="ShapeshifterTV" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8k6-0C-VhF"/>
+                        <viewControllerLayoutGuide type="bottom" id="Omz-h4-5pY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="n3E-22-xQL">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="66" sectionHeaderHeight="40" sectionFooterHeight="40" translatesAutoresizingMaskIntoConstraints="NO" id="1S1-bA-04v">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="894"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="theSongs" rowHeight="40" id="vWw-Qv-GIU">
+                                        <rect key="frame" x="0.0" y="54" width="1920" height="40"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vWw-Qv-GIU" id="MMS-k9-n03">
+                                            <rect key="frame" x="0.0" y="0.0" width="1904" height="40"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="NOW-lc-fMf" id="Pbu-Cq-m3A"/>
+                                    <outlet property="delegate" destination="NOW-lc-fMf" id="0g3-k9-fxf"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <animations/>
+                    </view>
+                    <connections>
+                        <outlet property="credits" destination="1S1-bA-04v" id="HBr-Z5-eq7"/>
+                        <segue destination="taF-UY-2xp" kind="show" identifier="toMenuSegue" id="f6B-nE-F7H"/>
+                        <segue destination="499-42-d0g" kind="show" identifier="creditToGameSegue" id="aXg-Bh-pCI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3gD-8X-S8J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3650" y="-199"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="tS4-jX-rWS"/>
+        <segue reference="xaP-I2-ghI"/>
+    </inferredMetricsTieBreakers>
 </document>

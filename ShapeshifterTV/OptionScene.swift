@@ -51,9 +51,9 @@ class OptionScene: SKScene {
     }
 
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         var playButton = UIButton(frame: CGRect(x: 0, y: 0, width: 420, height: 200))
-        playButton.setTitle("Play", forState: UIControlState.Normal)
+        playButton.setTitle("Play", for: .normal)
         //playButton.setImage(UIImage(contentsOfFile: "Coin01"), forState: UIControlState.Normal)
         //playButton.imageForState(UIControlState.Normal)
         var playNode = SKNode()
@@ -65,7 +65,7 @@ class OptionScene: SKScene {
     func buildScene() {
         /* Setup your scene here */
         print("did move to view")
-        backgroundColor = UIColor.purpleColor()
+        backgroundColor = UIColor.purple
         
         //let ySpacing = 150.0 * scaleFactor
         
@@ -80,20 +80,20 @@ class OptionScene: SKScene {
         easyButton.name = "Easy"
         easyButton.text = "Easy"
         easyButton.zPosition = 2
-        easyButton.fontColor = SKColor.whiteColor()
+        easyButton.fontColor = SKColor.white
         easyButton.position = CGPoint(x: CGFloat(self.size.width/2 - 90), y: CGFloat(self.size.height/1.1 - 35.0))
         self.addChild(easyButton)
         
         mediumButton.name = "Medium"
         mediumButton.text = "Med"
-        mediumButton.fontColor = SKColor.grayColor()
+        mediumButton.fontColor = SKColor.gray
         mediumButton.zPosition = 2
         mediumButton.position = CGPoint(x: CGFloat(self.size.width/2), y: CGFloat(self.size.height/1.1 - 35.0))
         self.addChild(mediumButton)
         
         hardButton.name = "Hard"
         hardButton.text = "Hard"
-        hardButton.fontColor = SKColor.grayColor()
+        hardButton.fontColor = SKColor.gray
         hardButton.zPosition = 2
         hardButton.position = CGPoint(x: CGFloat(self.size.width/2 + 90.0), y: CGFloat(self.size.height/1.1 - 35.0))
         self.addChild(hardButton)
@@ -108,7 +108,7 @@ class OptionScene: SKScene {
         
         musicButton.name = "Music"
         musicButton.text = "On"
-        musicButton.fontColor = SKColor.whiteColor()
+        musicButton.fontColor = SKColor.white
         musicButton.zPosition = 2
         musicButton.position = CGPoint(x: CGFloat(self.size.width/2), y: CGFloat(self.size.height/1.35 - 35.0))
         self.addChild(musicButton)
@@ -119,14 +119,14 @@ class OptionScene: SKScene {
         
         restTimeLabel.text = "Rest time: " + String(restTime)
         restTimeLabel.zPosition = 2
-        restTimeLabel.fontColor = SKColor.whiteColor()
+        restTimeLabel.fontColor = SKColor.white
         restTimeLabel.position = CGPoint(x:self.size.width/2.0, y: CGFloat(self.size.height/1.75))
         self.addChild(restTimeLabel)
         
         moreRest.name = "more"
         moreRest.text = "+"
         moreRest.zPosition = 2
-        moreRest.fontColor = SKColor.whiteColor()
+        moreRest.fontColor = SKColor.white
         moreRest.position = CGPoint(x: CGFloat(self.size.width/2 - 90), y: CGFloat(self.size.height/1.75 - 35.0))
         self.addChild(moreRest)
         
@@ -137,12 +137,12 @@ class OptionScene: SKScene {
         lessRest.name = "less"
         lessRest.text = "-"
         lessRest.zPosition = 2
-        lessRest.fontColor = SKColor.whiteColor()
+        lessRest.fontColor = SKColor.white
         lessRest.position = CGPoint(x: CGFloat(self.size.width/2 + 90), y: CGFloat(self.size.height/1.75 - 35.0))
         self.addChild(lessRest)
         
         heartRateLabel.text = "Heart rate: " + String(theMonitor.currentHeartRate) + " bpm"
-        heartRateLabel.fontColor = SKColor.whiteColor()
+        heartRateLabel.fontColor = SKColor.white
         heartRateLabel.position = CGPoint(x: CGFloat(self.size.width/2), y: CGFloat(self.size.height/2.5))
         self.addChild(heartRateLabel)
         
@@ -154,7 +154,7 @@ class OptionScene: SKScene {
         
         finishButton.text = "Finish Workout"
         finishButton.name = "finish"
-        finishButton.fontColor = SKColor.whiteColor()
+        finishButton.fontColor = SKColor.white
         finishButton.position = CGPoint(x: self.size.width/2.0, y: self.size.height/5.5)
         self.addChild(finishButton)
         
@@ -164,29 +164,29 @@ class OptionScene: SKScene {
         print("touch")
         let touch: UITouch = touches.first!
         print(touch)
-        let location = touch.locationInNode(self)
+        let location = touch.location(in: self)
         print(location)
-        let node = self.nodeAtPoint(location)
+        let node = self.atPoint(location)
         print(node)
         
         // If next button is touched, start transition to second scene
         if (node.name == "PlayButton") {
             print("play pressed")
             let secondScene = GameScene(size: self.size)
-            let transition = SKTransition.flipVerticalWithDuration(1.0)
-            secondScene.scaleMode = SKSceneScaleMode.ResizeFill
-            self.removeChildrenInArray([backgroundNode,node])
+            let transition = SKTransition.flipVertical(withDuration: 1.0)
+            secondScene.scaleMode = SKSceneScaleMode.resizeFill
+            self.removeChildren(in: [backgroundNode,node])
             self.scene!.view?.presentScene(secondScene, transition: transition)
         } else if (node.name == "Easy") {
             coinBoost = 30.0
             cloudBoost = 550.0
             scoreMultiplier = 1.0
             heartRateBoost = 200.0
-            easyButton.fontColor = SKColor.whiteColor()
-            mediumButton.fontColor = SKColor.grayColor()
-            hardButton.fontColor = SKColor.grayColor()
+            easyButton.fontColor = SKColor.white
+            mediumButton.fontColor = SKColor.gray
+            hardButton.fontColor = SKColor.gray
             let buttonPress = SKAction.playSoundFileNamed("ButtonPress1.aiff", waitForCompletion: true)
-            runAction(buttonPress)
+            run(buttonPress)
             
         } else if (node.name == "Medium") {
             
@@ -194,25 +194,25 @@ class OptionScene: SKScene {
             cloudBoost = 500.0
             scoreMultiplier = 1.3
             heartRateBoost = 50.0
-            easyButton.fontColor = SKColor.grayColor()
-            mediumButton.fontColor = SKColor.whiteColor()
-            hardButton.fontColor = SKColor.grayColor()
+            easyButton.fontColor = SKColor.gray
+            mediumButton.fontColor = SKColor.white
+            hardButton.fontColor = SKColor.gray
             let buttonPress = SKAction.playSoundFileNamed("ButtonPress1.aiff", waitForCompletion: true)
-            runAction(buttonPress)
+            run(buttonPress)
             
         } else if (node.name == "Hard") {
             coinBoost = 5.0
             cloudBoost = 270.0
             scoreMultiplier = 1.5
             heartRateBoost = 40.0
-            easyButton.fontColor = SKColor.grayColor()
-            mediumButton.fontColor = SKColor.grayColor()
-            hardButton.fontColor = SKColor.whiteColor()
+            easyButton.fontColor = SKColor.gray
+            mediumButton.fontColor = SKColor.gray
+            hardButton.fontColor = SKColor.white
             let buttonPress = SKAction.playSoundFileNamed("ButtonPress1.aiff", waitForCompletion: true)
-            runAction(buttonPress)
+            run(buttonPress)
         } else if node.name == "finish" {
             let finishScene = FinishScene(size: self.size)
-            finishScene.scaleMode = SKSceneScaleMode.ResizeFill
+            finishScene.scaleMode = SKSceneScaleMode.resizeFill
             //self.removeChildrenInArray([])
             self.scene!.view?.presentScene(finishScene)
         } else if (node.name == "Music") {
@@ -241,7 +241,7 @@ class OptionScene: SKScene {
         }
     }
     
-    override func update(currentTime: CFTimeInterval) {
+    override func update(_ currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         heartRateLabel.text = "Heart rate: " + String(theMonitor.currentHeartRate) + " bpm"
         

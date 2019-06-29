@@ -17,7 +17,7 @@ var theMonitor = HeartRateLEMonitor()
 var theSecondMonitor:HeartRateLEMonitor!
 var alreadyConnected = [CBPeripheral]()
 var thePlayer = ""
-var notification:NSNotificationCenter = NSNotificationCenter.defaultCenter()
+var notification:NotificationCenter = NSNotificationCenter.defaultCenter()
 var currentLevel = 1
 var restTime = 10
 
@@ -34,7 +34,7 @@ var difficultyLevel = "Easy"
 var allTimeScore = 0.0
 
 var musicShouldPlay = true
-let defaults = NSUserDefaults.standardUserDefaults()
+let defaults = UserDefaults.standardUserDefaults()
 var showExplainScene = true
 
 var levelScore = 0.0
@@ -62,9 +62,9 @@ var playlists:[AnyObject]!
 //var myPlayer:MPMusicPlayerController = MPMusicPlayerController.applicationMusicPlayer()
 var playlistPath:NSIndexPath?
 var songLength:Float!
-var musicTimer:NSTimer!
+var musicTimer:Timer!
 var playlistHasBeenOpened = true
-var musicDefaults = NSUserDefaults.standardUserDefaults()
+var musicDefaults = UserDefaults.standard
 
 var playpauseRecognizer:UIGestureRecognizer!
 var menuRecognizer:UIGestureRecognizer!
@@ -72,7 +72,7 @@ var playing = false
 var theMenuViewController: UIViewController!
 var skView:SKView!
 var connectedDevices = []
-var checkPeripherals:NSTimer!
+var checkPeripherals:Timer!
 var checkCounter = 0
 var theGameContext = 0
 var theLoadScene:LoadScene!
@@ -114,10 +114,10 @@ class GameViewController: UIViewController {
             theSecondMonitor = HeartRateLEMonitor()
 
                 theSecondMonitor.startUpCentralManager()
-            notification.addObserver(self, selector: "findMonitors:", name: "findMonitors", object: nil)
+            notification.addObserver(self, selector: "findMonitors:", name: NSNotification.Name(rawValue: "findMonitors"), object: nil)
             //notification.addObserver(self, selector: "findMonitors:", name: "findMonitors", object: nil)
             theGameContext = gameContext.load.rawValue
-            UIApplication.sharedApplication().idleTimerDisabled = true
+            UIApplication.shared.isIdleTimerDisabled = true
 
         }
         
@@ -135,7 +135,7 @@ class GameViewController: UIViewController {
     }
     
     func menuTapped(sender: UITapGestureRecognizer) {
-        self.performSegueWithIdentifier("menuSegue", sender: self)
+        self.performSegue(withIdentifier: "menuSegue", sender: self)
     }
 /*    override func pressesBegan(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
         for item in presses {
@@ -178,22 +178,22 @@ class GameViewController: UIViewController {
     override func pressesBegan(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
         for press in presses {
             switch press.type {
-            case .UpArrow:
+            case .upArrow:
                 print("Up Arrow")
-            case .DownArrow:
+            case .downArrow:
                 print("Down arrow")
-            case .LeftArrow:
+            case .leftArrow:
                 print("Left arrow")
-            case .RightArrow:
+            case .rightArrow:
                 print("Right arrow")
-            case .Select:
+            case .select:
                 print("Select")
-            case .Menu:
+            case .menu:
                 print("Menu")
                 switch theGameContext {
                 case gameContext.load.rawValue:
                     print("CONTEXT LOAD & MENU WAS PRESSED")
-                    super.pressesBegan(presses, withEvent: event)
+                    super.pressesBegan(presses, with: event)
                 case gameContext.game.rawValue:
                     print("CONTEXT GAME & MENU WAS PRESSED")
                     print("Playing var status: \(playing)")
@@ -207,19 +207,19 @@ class GameViewController: UIViewController {
                         skView.presentScene(theLoadScene)
                     }
                     if theGameScene != nil {
-                        theGameScene.pressesBegan(presses, withEvent: event)
+                        theGameScene.pressesBegan(presses, with: event)
                     }
                 case gameContext.menu.rawValue:
                     print("CONTEXT MENU & MENU WAS PRESSED")
 
                     //performSegueWithIdentifier("menuSegue", sender: self)
                     //theMenuViewController.pressesBegan(presses, withEvent: event)
-                    super.pressesBegan(presses, withEvent: event)
+                    super.pressesBegan(presses, with: event)
                     
                 default: break
                 }
                 
-            case .PlayPause:
+            case .playPause:
                 print("Play/Pause")
                 switch theGameContext {
                 
@@ -228,7 +228,7 @@ class GameViewController: UIViewController {
                         checkPeripherals = nil
                     }
                     if playing == false {
-                        checkPeripherals = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "periphCheck", userInfo: nil, repeats: true)
+                        checkPeripherals = Timer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "periphCheck", userInfo: nil, repeats: true)
                     }
                 case gameContext.game.rawValue:
                     if checkPeripherals != nil {
@@ -246,19 +246,20 @@ class GameViewController: UIViewController {
                     //theMenuViewController.pressesBegan(presses, withEvent: event)
                 default: break
                 }
+        
             }
         }
     }
     override func pressesEnded(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
         for item in presses {
-            if item.type == .Menu {
+            if item.type == .menu {
                 if playing == false && theGameContext == gameContext.menu.rawValue {
-                    super.pressesEnded(presses, withEvent: event)
+                    super.pressesEnded(presses, with: event)
                     print("PressesEnded .Menu going up the chain")
                     print(superclass)
                     return
                 } else if playing == false && theGameContext == gameContext.load.rawValue {
-                    super.pressesEnded(presses, withEvent: event)
+                    super.pressesEnded(presses, with: event)
                     return
                 }
             }
@@ -271,11 +272,11 @@ class GameViewController: UIViewController {
     }
     
     func findMonitors(notification: NSNotification) {
-        checkPeripherals = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "periphCheck", userInfo: nil, repeats: true)
+        checkPeripherals = Timer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "periphCheck", userInfo: nil, repeats: true)
     }
     func periphCheck() {
         print("checking periph count")
-        connectedDevices = theMonitor.centralManager.retrieveConnectedPeripheralsWithServices([theMonitor.HeartRateService])
+        connectedDevices = theMonitor.centralManager.retrieveConnectedPeripherals(withServices: [theMonitor.HeartRateService])
         
         if connectedDevices.count == 0 && numberOfPlayers == 1 {
             //theMonitor.startUpCentralManager()
@@ -304,27 +305,27 @@ class GameViewController: UIViewController {
         
         if numberOfPlayers == 1 {
             switch checkCounter {
-            case 1: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor"]))
-            case 2: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor ."]))
-            case 3: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor . ."]))
-            case 4: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor . . ."]))
-            case 5: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor ."]))
-            case 6: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor . ."]))
-            case 7: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor . . ."]))
-            case 8: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor ."]))
-            case 9: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor . ."]))
-            case 10: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor . . ."]))
-            default: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor"]))
+            case 1: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor"]) as Notification)
+            case 2: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor ."]) as Notification)
+            case 3: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor . ."]) as Notification)
+            case 4: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor . . ."]) as Notification)
+            case 5: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor ."]) as Notification)
+            case 6: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor . ."]) as Notification)
+            case 7: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor . . ."]) as Notification)
+            case 8: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor ."]) as Notification)
+            case 9: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor . ."]) as Notification)
+            case 10: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor . . ."]) as Notification)
+            default: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning for Heart Rate Monitor"]) as Notification)
             }
             if connectedDevices.count > 0 {
                 if checkPeripherals != nil {
                     checkPeripherals.invalidate()
                 }
-                let alertController = UIAlertController(title: "Available Connected Devices", message: "Select Monitor", preferredStyle: .ActionSheet)
+                let alertController = UIAlertController(title: "Available Connected Devices", message: "Select Monitor", preferredStyle: .actionSheet)
                 for i in 0...connectedDevices.count - 1 {
-                    let deviceOne = UIAlertAction(title: connectedDevices[i].name, style: .Default) { (action) in
-                        theMonitor.centralManager.connectPeripheral(connectedDevices[i] as! CBPeripheral, options: nil)
-                        notification.postNotification(NSNotification(name: "updateScreen", object: self, userInfo: ["theStatus":"Press Play to Start"]))
+                    let deviceOne = UIAlertAction(title: (connectedDevices[i] as AnyObject).name, style: .default) { (action) in
+                        theMonitor.centralManager.connect(connectedDevices[i] as! CBPeripheral, options: nil)
+                        notification.postNotification(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: self, userInfo: ["theStatus":"Press Play to Start"]) as Notification)
                         if checkPeripherals != nil {
                             checkPeripherals.invalidate()
                         }
@@ -333,12 +334,12 @@ class GameViewController: UIViewController {
                     alertController.addAction(deviceOne)
                 }
                 
-                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
                     // ...
                 }
                 alertController.addAction(cancelAction)
                 
-                self.presentViewController(alertController, animated: false) {
+                self.present(alertController, animated: false) {
                     print("presenting alert view")
                 }
 
@@ -353,39 +354,39 @@ class GameViewController: UIViewController {
 
         if numberOfPlayers == 2 {
             switch checkCounter {
-            case 1: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning"]))
-            case 2: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning ."]))
-            case 3: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning . ."]))
-            case 4: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning . . ."]))
-            case 5: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning ."]))
-            case 6: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning . ."]))
-            case 7: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning . . ."]))
-            case 8: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning ."]))
-            case 9: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning . ."]))
-            case 10: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning . . ."]))
-            default: notification.postNotification(NSNotification(name: "updateScreen", object: nil, userInfo: ["theStatus":"Scanning"]))
+            case 1: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning"]) as Notification)
+            case 2: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning ."]) as Notification)
+            case 3: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning . ."]) as Notification)
+            case 4: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning . . ."]) as Notification)
+            case 5: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning ."]) as Notification)
+            case 6: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning . ."]) as Notification)
+            case 7: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning . . ."]) as Notification)
+            case 8: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning ."]) as Notification)
+            case 9: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning . ."]) as Notification)
+            case 10: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning . . ."]) as Notification)
+            default: notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: nil, userInfo: ["theStatus":"Scanning"]) as Notification)
             }
 
             if connectedDevices.count > 1 {
                 checkPeripherals.invalidate()
-                let alertController = UIAlertController(title: "Detected Heart Rate Monitors", message: "Select Player 1's Monitor", preferredStyle: .ActionSheet)
+                let alertController = UIAlertController(title: "Detected Heart Rate Monitors", message: "Select Player 1's Monitor", preferredStyle: .actionSheet)
                     for i in 0...connectedDevices.count - 1 {
-                        var idNum = String(connectedDevices[i].identifier)
+                        var idNum = String((connectedDevices[i] as AnyObject).identifier)
                         let range = idNum.startIndex...idNum.endIndex.advancedBy(-5)
                         idNum.removeRange(range)
                         print(idNum)
                         print(range)
-                        let deviceOne = UIAlertAction(title: connectedDevices[i].name + " " + idNum, style: .Default) { (action) in
+                        let deviceOne = UIAlertAction(title: (connectedDevices[i] as AnyObject).name + " " + idNum, style: .default) { (action) in
                             //theMonitor.centralManager.connectPeripheral(connectedDevices[i] as! CBPeripheral, options: nil)
-                                let connDevices = connectedDevices
-                                theSecondMonitor.centralManager.connectPeripheral(connDevices[i] as! CBPeripheral, options: nil)
+                            var connDevices = connectedDevices
+                            theSecondMonitor.centralManager.connect(connDevices[i] as! CBPeripheral, options: nil)
                                 let reversedDevices = connDevices.reverse()
                                 theSecondMonitor.centralManager.cancelPeripheralConnection(reversedDevices[i] as! CBPeripheral)
                            
                                 theMonitor.centralManager.connectPeripheral(reversedDevices[i] as! CBPeripheral, options: nil)
                                 theMonitor.centralManager.cancelPeripheralConnection(connDevices[i] as! CBPeripheral)
                             
-                                print("the first player has monitor " + connDevices[i].name + String(connDevices[i].identifier))
+                            print("the first player has monitor " + (connDevices[i] as AnyObject).name + String((connDevices[i] as AnyObject).identifier))
                                 print("the second player has monitor " + reversedDevices[i].name + String(reversedDevices[i].identifier))
                                     
                                 if theMonitor.serialNumber == theSecondMonitor.serialNumber {
@@ -399,17 +400,17 @@ class GameViewController: UIViewController {
                             
                             checkPeripherals.invalidate()
                             theGameContext = gameContext.game.rawValue
-                            notification.postNotification(NSNotification(name: "updateScreen", object: self, userInfo: ["theStatus":"Press Play to Start"]))
+                            notification.post(NSNotification(name: NSNotification.Name(rawValue: "updateScreen"), object: self, userInfo: ["theStatus":"Press Play to Start"]) as Notification)
                         }
                 alertController.addAction(deviceOne)
                 }
     
-                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
                     // ...
                 }
                 alertController.addAction(cancelAction)
             
-                self.presentViewController(alertController, animated: false) {
+                self.present(alertController, animated: false) {
                     print("presenting alert view")
                 }
 

@@ -66,12 +66,12 @@ class MenuViewController: UIViewController {
             musicLabel.text = "Music: Off"
             musicShouldPlay = false
             backgroundMusicPlayer.pause()
-            musicButton.setTitle("Off", forState: UIControlState.Normal)
+            musicButton.setTitle("Off", for: UIControl.State.normal)
         } else {
             musicLabel.text = "Music: On"
             musicShouldPlay = true
             backgroundMusicPlayer.play()
-            musicButton.setTitle("On", forState: UIControlState.Normal)
+            musicButton.setTitle("On", for: UIControl.State.normal)
         }
     }
     @IBAction func addRestTime(sender: AnyObject) {
@@ -94,13 +94,13 @@ class MenuViewController: UIViewController {
     
     @IBAction func playButton(sender: AnyObject) {
         //self.view.window!.rootViewController!.performSegueWithIdentifier("gameSegue", sender:self)
-        self.performSegueWithIdentifier("gameSegue", sender: self)
+        self.performSegue(withIdentifier: "gameSegue", sender: self)
         for view in (self.view?.subviews)! {
             view.removeFromSuperview()
         }
     }
     @IBAction func credits(sender: AnyObject) {
-        self.performSegueWithIdentifier("toCreditsSegue", sender: self)
+        self.performSegue(withIdentifier: "toCreditsSegue", sender: self)
     }
     func UpdateHR() {
         hrcLabel.text = "Heart Rate Monitor:" + String(theMonitor.currentHeartRate)
@@ -128,22 +128,22 @@ class MenuViewController: UIViewController {
     override func pressesBegan(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
         for press in presses {
             switch press.type {
-            case .UpArrow:
+            case .upArrow:
                 print("Up Arrow from menusc")
-            case .DownArrow:
+            case .downArrow:
                 print("Down arrow from menusc")
-            case .LeftArrow:
+            case .leftArrow:
                 print("Left arrow from menusc")
-            case .RightArrow:
+            case .rightArrow:
                 print("Right arrow from menusc")
-            case .Select:
+            case .select:
                 print("Select from menusc")
-            case .Menu:
+            case .menu:
                 print("Menu from menusc")
                 switch theGameContext {
                 case gameContext.load.rawValue:
                     print("loc:menu,but:menu,contxt:load")
-                    super.pressesBegan(presses, withEvent: event)
+                    super.pressesBegan(presses, with: event)
                 case gameContext.game.rawValue: break
                     
                     //notification.postNotification(NSNotification(name: "pause", object: nil))
@@ -156,7 +156,7 @@ class MenuViewController: UIViewController {
                 default: break
                 }
                 
-            case .PlayPause:
+            case .playPause:
                 print("Play/Pause")
                 switch theGameContext {
                     
@@ -164,13 +164,13 @@ class MenuViewController: UIViewController {
                     if checkPeripherals != nil {
                         checkPeripherals = nil
                     }
-                    checkPeripherals = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: "periphCheck", userInfo: nil, repeats: true)
+                    checkPeripherals = Timer.scheduledTimerWithTimeInterval(2.5, target: self, selector: "periphCheck", userInfo: nil, repeats: true)
                     
                 case gameContext.game.rawValue:
                     if checkPeripherals != nil {
                         checkPeripherals = nil
                     }
-                    theLoadScene.pressesBegan(presses, withEvent: event)
+                    theLoadScene.pressesBegan(presses, with: event)
                     notification.postNotification(NSNotification(name: "pause", object: nil))
                     //notification.postNotification(NSNotification(name: "loadGame", object: nil))
                 case gameContext.menu.rawValue:

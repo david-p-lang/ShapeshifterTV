@@ -48,7 +48,7 @@ class PlatformNode: GameObjectNode {
     override func collisionWithPlayer(player: SKNode) -> Bool {
         
         // Only bounce the player if he's falling
-        if player.physicsBody?.velocity.dy < 0 {
+        if let velocityDeltaY = player.physicsBody?.velocity.dy, velocityDeltaY <= 0.0 {
             
             player.physicsBody?.velocity = CGVector(dx: player.physicsBody!.velocity.dx, dy: modCloudBoost)
             // Remove if it is a Break type platform
@@ -56,8 +56,8 @@ class PlatformNode: GameObjectNode {
                 self.removeFromParent()
             }
         }
-        if player2 != nil {
-            if player2.physicsBody?.velocity.dy < 0 {
+        if player2 != nil, let secondPlayersDeltaY = player2.physicsBody?.velocity.dy {
+            if secondPlayersDeltaY < 0 {
                 print("Player2 falling Platform COLLISION")
                 player2.physicsBody?.velocity = CGVector(dx: player2.physicsBody!.velocity.dx, dy: modCloudBoost)
                 // Remove if it is a Break type platform
@@ -68,5 +68,6 @@ class PlatformNode: GameObjectNode {
         }
         return false
     }
+    
     
 }
